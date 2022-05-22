@@ -1,0 +1,93 @@
+<html>
+<head>
+<style>
+        *{
+            margin:0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+.row{
+       padding-top: 50px;
+       display: flex;
+       align-items: center;
+       flex-wrap:wrap;
+       justify-content: space-around;
+   }
+   .product{
+       flex-basis:25%;
+       margin: 5px;
+       padding:5px;
+       max-width: 200px;
+       margin-bottom: 50px;
+       transition: transform 0.5s;
+   }
+   .product:hover {
+       transform: translateY(-5px);
+   }
+   .pro-con {
+       background-color: #3369FF;
+   }
+   .row>img{
+       height: 100%;
+       width:auto;
+       transition: transform 0.5s;
+   }
+   h2{
+       text-align: center;
+   }
+   p{
+       color:black;
+       text-align: center;
+   }
+
+</style>
+</head>
+
+<body>
+
+<h1 style="text-align: center">ALL PRODUCTS</h1>
+
+<%
+Class.forName("com.mysql.jdbc.Driver");
+Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/users", "root","123456767");
+Statement stm = conn.createStatement();
+ResultSet rs = stm.executeQuery("SELECT * FROM users.product\n");
+
+int cnt = 1;
+while(rs.next())
+{
+   ++ cnt;
+   if(cnt % 2 == 0)
+   {
+%>
+
+<div class="row">
+<div class="product">
+   <div class="pro-con">
+   <a href="Bdetail.jsp?pid=<%=rs.getString("product_id")%>">
+   <img src="ram.png"/>
+   </a>
+   <h2><%=rs.getString("product_name")%></h2>
+   <p><%=rs.getString("price")%></p>
+   </div>
+</div>
+<%
+}
+else {
+%>
+<div class="product">
+   <div class="pro-con">
+   <a href="Bdetail.jsp?pid=<%=rs.getString("product_id")%>">
+   <img src="ram.jpg"/>
+   </a>
+   <h2><%=rs.getString("product_name")%></h2>
+   <p><%=rs.getString("price")%></p>
+   </div>
+</div>
+<%
+       }
+</div>
+}
+%>
+</body>
+</html>
